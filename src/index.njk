@@ -12,19 +12,27 @@
   </head>
   <body>
     <main>
-      <h1>Hospitalisierungszahlen COVID19 nach RKI</h1>
+      <h1>7-Tage Hospitalisierungszahlen COVID19 nach RKI</h1>
 
       <table>
         <thead>
           <tr>
             <th rowspan="2">Gebiet</th>
-            <th colspan="2">Gesamt</th>
+            <th rowspan="2">Gs</th>
+            <th colspan="3">5-Tage-Hoch</th>
+            <th colspan="3">Gesamt</th>
             {% for age in hospit_data.total.ageGroups %}
               <th colspan="2">{{age}}</th>
             {% endfor %}
           </tr>
           <tr>
-            {% for i in range(0, hospit_data.total.ageGroups.length + 1) %}
+            <th>Total</th>
+            <th>Pro 100.000</th>
+            <th>Datum</th>
+            <th>Total</th>
+            <th>Pro 100.000</th>
+            <th>Datum</th>
+            {% for i in range(0, hospit_data.total.ageGroups.length ) %}
               <th>Total</th>
               <th>Pro 100.000</th>
             {% endfor %}
@@ -34,8 +42,13 @@
           {% for gebiet, dataRowCollection in hospit_data.regions %}
             <tr class="{{ dataRowCollection.criticallity }}" style="--crit-rating: {{dataRowCollection.critRating}}">
               <td>{{ gebiet }}</td>
+              <td>{{ dataRowCollection.gLevel }}</td>
+              <td>{{ dataRowCollection.maxInz5Days.value["00+"].hosp7TTotal }}</td>
+              <td>{{ dataRowCollection.maxInz5Days.value["00+"].hosp7TInzidenz }}</td>
+              <td>{{ dataRowCollection.maxInz5Days.date.toLocaleDateString("de") }}</td>
               <td>{{ dataRowCollection.currentData.value["00+"].hosp7TTotal }}</td>
               <td>{{ dataRowCollection.currentData.value["00+"].hosp7TInzidenz }}</td>
+              <td>{{ dataRowCollection.currentData.date.toLocaleDateString("de") }}</td>
               {% for alter in dataRowCollection.ageGroups %}
                 <td>{{ dataRowCollection.currentData.value[alter].hosp7TTotal }}</td>
                 <td>{{ dataRowCollection.currentData.value[alter].hosp7TInzidenz }}</td>
@@ -44,6 +57,10 @@
           {% endfor %}
         </tbody>
       </table>
+      <p>
+        Die Spalte <strong>Gs</strong> errechnet aus dem 5-Tages-Höchstwert das aktuelle Maßnahmen-Level des Bundesland nach der Bund-Länder-Konferenz vom November 2021.<br/>
+        Angaben ohne Gewähr, geltende Auflagen können abweichen. 
+      </p>
     </main>
     <footer>
       Zahlen nach <a href="https://github.com/robert-koch-institut/COVID-19-Hospitalisierungen_in_Deutschland">RKI COVID 19 Hospitalisierungszahlen</a><br/>

@@ -38,6 +38,28 @@ class DataRowCollection {
     return this.currentData.value["00+"].hosp7TInzidenz / 9;
   }
 
+  get maxInz5Days() {
+    const lastDays = this.dataRow.slice(0, 5);
+    return lastDays.sort(
+      (a, b) => b.value["00+"].hosp7TInzidenz - a.value["00+"].hosp7TInzidenz
+    )[0];
+  }
+
+  get gLevel() {
+    const maxInz = this.maxInz5Days.value["00+"].hosp7TInzidenz;
+
+    if (maxInz >= 9) {
+      return "❌";
+    }
+    if (maxInz >= 6) {
+      return "2G+";
+    }
+    if (maxInz >= 3) {
+      return "2G";
+    }
+    return "3G";
+  }
+
   addData(datum) {
     this.dataRow.push(datum);
   }

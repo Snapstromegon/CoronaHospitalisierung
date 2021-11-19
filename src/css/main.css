@@ -16,8 +16,8 @@ body {
 }
 
 main {
-  max-width: 90%;
-  width: 90rem;
+  max-width: 95%;
+  width: 110rem;
   background: #fff;
   margin: auto;
   border-radius: 1rem;
@@ -30,6 +30,10 @@ footer {
 
 h1 {
   margin-bottom: 1rem;
+}
+
+p {
+  margin-top: 1rem;
 }
 
 table {
