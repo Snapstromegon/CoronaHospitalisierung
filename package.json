@@ -1,0 +1,21 @@
+{
+  "name": "coronahospital",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx @11ty/eleventy",
+    "serve": "npx @11ty/eleventy --serve"
+  },
+  "type": "commonjs",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@11ty/eleventy": "^1.0.0-beta.8",
+    "@11ty/eleventy-navigation": "^0.3.2",
+    "html-minifier": "^4.0.0",
+    "js-yaml": "^4.1.0",
+    "node-fetch": "^2.6.6"
+  }
+}

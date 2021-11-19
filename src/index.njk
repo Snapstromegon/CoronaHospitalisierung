@@ -1,0 +1,53 @@
+---
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RKI Corona Hospitalisierung</title>
+    <link rel="stylesheet" href="css/main.css">
+  </head>
+  <body>
+    <main>
+      <h1>Hospitalisierungszahlen COVID19 nach RKI</h1>
+
+      <table>
+        <thead>
+          <tr>
+            <th rowspan="2">Gebiet</th>
+            <th colspan="2">Gesamt</th>
+            {% for age in hospit_data.total.ageGroups %}
+              <th colspan="2">{{age}}</th>
+            {% endfor %}
+          </tr>
+          <tr>
+            {% for i in range(0, hospit_data.total.ageGroups.length + 1) %}
+              <th>Total</th>
+              <th>Pro 100.000</th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for gebiet, dataRowCollection in hospit_data.regions %}
+            <tr class="{{ dataRowCollection.criticallity }}" style="--crit-rating: {{dataRowCollection.critRating}}">
+              <td>{{ gebiet }}</td>
+              <td>{{ dataRowCollection.currentData.value["00+"].hosp7TTotal }}</td>
+              <td>{{ dataRowCollection.currentData.value["00+"].hosp7TInzidenz }}</td>
+              {% for alter in dataRowCollection.ageGroups %}
+                <td>{{ dataRowCollection.currentData.value[alter].hosp7TTotal }}</td>
+                <td>{{ dataRowCollection.currentData.value[alter].hosp7TInzidenz }}</td>
+              {% endfor %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </main>
+    <footer>
+      Zahlen nach <a href="https://github.com/robert-koch-institut/COVID-19-Hospitalisierungen_in_Deutschland">RKI COVID 19 Hospitalisierungszahlen</a><br/>
+      Täglich mehrfach automatisiert aufbereitet von Raphael Höser
+    </footer>
+  </body>
+</html>
